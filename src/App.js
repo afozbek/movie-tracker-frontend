@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./App.css";
+import "./main.scss";
 import AppRouter from "./AppRouter";
 
 class App extends React.Component {
