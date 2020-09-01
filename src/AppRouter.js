@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import RegisterForm from "./components/Auth/RegisterForm/RegisterForm";
+import Register from "./views/Auth/Register/Register";
 import Navbar from "./containers/Navbar";
-import LoginForm from "./components/Auth/LoginForm/LoginForm";
+import Login from "./views/Auth/Login/Login";
 import Users from "./views/Users/Users";
 import Movies from "./views/Movies/Movies";
 import Directors from "./views/Directors/Directors";
 import UpdateUser from "./views/Users/UpdateUser";
 import UpdateMovie from "./views/Movies/UpdateMovie";
 import UpdateDirector from "./views/Directors/UpdateDirector";
-import Logout from "./components/Auth/Logout/Logout";
+import Logout from "./views/Auth/Logout/Logout";
 import AddMovie from "./views/Movies/AddMovie";
 import AddUser from "./views/Users/AddUser";
 import AddDirector from "./views/Directors/AddDirector";
@@ -33,9 +33,9 @@ const AppRouter = (props) => {
         <Navbar {...props} />
 
         <Switch>
-          <Route path="/login" exact component={LoginForm} />
+          <Route path="/login" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
-          <Route path="/register" exact component={RegisterForm} />
+          <Route path="/register" exact component={Register} />
 
           {/* USERS */}
           <Route path="/users" exact component={Users} />

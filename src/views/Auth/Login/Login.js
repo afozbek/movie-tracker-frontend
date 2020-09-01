@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from "./node_modules/react";
-import { Link } from "./node_modules/react-router-dom";
-import axios from "./node_modules/axios";
-import Loading from "../../common/Loading/Loading";
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-class LoginForm extends Component {
+import Loading from "../../../components/common/Loading/Loading";
+
+class Login extends Component {
   state = {
     userData: {},
     message: "",
@@ -110,4 +111,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default Login;

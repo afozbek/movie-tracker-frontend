@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "./node_modules/react";
-import { Link } from "./node_modules/react-router-dom";
-import axios from "./node_modules/axios";
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default class RegisterForm extends Component {
+class Register extends Component {
   state = {
     message: "",
     input: {
@@ -160,3 +160,5 @@ export default class RegisterForm extends Component {
     );
   }
 }
+
+export default Register;
