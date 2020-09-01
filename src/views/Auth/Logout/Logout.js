@@ -1,18 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Logout extends Component {
-  state = {};
-
-  logoutHandler = (e) => {
+const Logout = () => {
+  const logoutHandler = (e) => {
     localStorage.removeItem("jwttoken");
     this.props.history.push("/login");
   };
 
-  render() {
-    return (
-      <button className="button abs-button" onClick={this.logoutHandler}>
-        LOG OUT
-      </button>
-    );
-  }
-}
+  return (
+    <button className="button abs-button" onClick={logoutHandler}>
+      LOG OUT
+    </button>
+  );
+};
+
+export default Logout;
