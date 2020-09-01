@@ -21,7 +21,7 @@ export const checkUserAuthentication = () => {
             fullName: res.data.user.firstName + " " + res.data.user.lastName,
             user: {
               token: jwtToken,
-              username: res.data.username,
+              username: res.data.user.username,
               authenticated: true,
             },
           };

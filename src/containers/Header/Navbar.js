@@ -39,9 +39,7 @@ const Navbar = ({ user, logoutHandler }) => {
           </>
         ) : (
           <li className="m-header__navItem">
-            <a href="#" onClick={() => logoutHandler(history)}>
-              Logout
-            </a>
+            <button onClick={() => logoutHandler(history)}>Logout</button>
           </li>
         )}
       </ul>
