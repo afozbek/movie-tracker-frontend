@@ -1,10 +1,13 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { Link } from "react-router-dom";
-import axios from "../../../axios-instance";
 
+import { connect } from "react-redux";
+
+import { login } from "../../../store/user/actions";
+import axios from "../../../axios-instance";
 import Loading from "../../../components/common/Loading/Loading";
 
-const Login = (props) => {
+const Login = ({ login, history, user }) => {
   const [loading, setLoading] = useState(true);
   const [input, setInput] = useState({ username: "", password: "" });
 
@@ -24,27 +27,16 @@ const Login = (props) => {
     setLoading(false);
   }, [loading]);
 
-  const formSubmitHandler = (e) => {
+  const formSubmitHandler = async (e) => {
     e.preventDefault();
 
     const { username, password } = input;
 
     setLoading(true);
 
-    axios
-      .post("/auth/login", { username, password })
-      .then((res) => {
-        localStorage.setItem("jwttoken", res.data.token);
-        localStorage.setItem("username", res.data.username);
+    await login(username, password, history);
 
-        setLoading(false);
-
-        props.history.push("/users");
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    setLoading(false);
   };
 
   const content = loading ? (
@@ -95,4 +87,12 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = {
+  login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
