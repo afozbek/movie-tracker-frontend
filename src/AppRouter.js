@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Register from "./views/Auth/Register/Register";
-import Navbar from "./containers/Header/Navbar";
 import Login from "./views/Auth/Login/Login";
 import Users from "./views/Users/Users";
 import Movies from "./views/Movies/Movies";

@@ -6,7 +6,6 @@ import Loading from "../../../components/common/Loading/Loading";
 
 const Login = (props) => {
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState({});
   const [input, setInput] = useState({ username: "", password: "" });
 
   const inputChangeHandler = (e) => {
@@ -38,7 +37,6 @@ const Login = (props) => {
         localStorage.setItem("jwttoken", res.data.token);
         localStorage.setItem("username", res.data.username);
 
-        setUserData(res.data);
         setLoading(false);
 
         props.history.push("/users");
