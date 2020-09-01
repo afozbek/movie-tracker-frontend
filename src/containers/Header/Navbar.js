@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Navbar = (props) => {
+import { connect } from "react-redux";
+import { logoutHandler } from "../../store/user/actions";
+
+const Navbar = ({ user, logoutHandler }) => {
   return (
     <>
       <ul className="m-header__navbar">
@@ -23,16 +26,33 @@ const Navbar = (props) => {
         <li className="m-header__navItem">
           <Link to="/watchlist">Your WatchList</Link>
         </li> */}
-
-        <li className="m-header__navItem">
-          <Link to="/login">Login</Link>
-        </li>
-        <li className="m-header__navItem">
-          <Link to="/register">Register</Link>
-        </li>
+        {!user.authenticated ? (
+          <>
+            <li className="m-header__navItem">
+              <Link to="/login">Login</Link>
+            </li>
+            <li className="m-header__navItem">
+              <Link to="/register">Register</Link>
+            </li>
+          </>
+        ) : (
+          <li className="m-header__navItem">
+            <a href="#" onClick={logoutHandler}>
+              Logout
+            </a>
+          </li>
+        )}
       </ul>
     </>
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = {
+  logoutHandler,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
