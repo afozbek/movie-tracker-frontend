@@ -5,7 +5,7 @@ const Navbar = (props) => {
   return (
     <>
       <ul className="m-header__navbar">
-        <li className="m-header__navItem">
+        {/* <li className="m-header__navItem">
           <Link to="/">Home</Link>
         </li>
         <li className="m-header__navItem">
@@ -22,13 +22,13 @@ const Navbar = (props) => {
         </li>
         <li className="m-header__navItem">
           <Link to="/watchlist">Your WatchList</Link>
-        </li>
+        </li> */}
 
         <li className="m-header__navItem">
-          <Link to="/register">Register</Link>
+          <Link to="/login">Login</Link>
         </li>
         <li className="m-header__navItem">
-          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
         </li>
       </ul>
     </>
