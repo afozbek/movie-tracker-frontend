@@ -1,4 +1,9 @@
-import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_STARTED } from "./types";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGIN_STARTED,
+  LOGOUT_SUCCESS,
+} from "./types";
 
 const initialState = {
   jwtToken: "",
@@ -15,13 +20,19 @@ export const userReducer = (state = initialState, action) => {
       return loginFailed(state, action.payload);
     case LOGIN_STARTED:
       return loginStarted(state);
+    case LOGOUT_SUCCESS:
+      return logoutSuccess(state, action.payload);
     default:
       return state;
   }
 };
 
 const loginSuccess = (state, data) => {
+  console.log(data);
   const { fullName, user } = data;
+
+  localStorage.setItem("jwttoken", user.token);
+  localStorage.setItem("username", user.username);
 
   return {
     ...state,
@@ -34,9 +45,19 @@ const loginSuccess = (state, data) => {
 
 // TODO: Buralarda state güncellemelerini düzenliyeceksin
 const loginFailed = (state, error) => {
+  console.log(error);
   return state;
 };
 
 const loginStarted = (state) => {
   return state;
+};
+
+const logoutSuccess = (state, history) => {
+  localStorage.removeItem("jwttoken");
+  localStorage.removeItem("username");
+
+  console.log("logout success");
+
+  return { ...initialState };
 };
