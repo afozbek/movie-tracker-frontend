@@ -57,7 +57,7 @@ const logoutSuccess = (state, history) => {
   localStorage.removeItem("jwttoken");
   localStorage.removeItem("username");
 
-  console.log("logout success");
+  history.push("/login");
 
   return { ...initialState };
 };
