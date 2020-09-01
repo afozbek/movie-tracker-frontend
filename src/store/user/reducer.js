@@ -1,46 +1,42 @@
-import { USER_LOGIN } from "./types";
-
-import axios from "../../axios-instance";
+import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_STARTED } from "./types";
 
 const initialState = {
   jwtToken: "",
   username: "",
+  fullName: "",
   authenticated: false,
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOGIN:
-      return login(state, action.payload);
+    case LOGIN_SUCCESS:
+      return loginSuccess(state, action.payload);
+    case LOGIN_FAILED:
+      return loginFailed(state, action.payload);
+    case LOGIN_STARTED:
+      return loginStarted(state);
     default:
       return state;
   }
 };
 
-const login = (state, payload) => {
-  const { username, password, history } = payload;
+const loginSuccess = (state, data) => {
+  const { fullName, user } = data;
 
-  axios
-    .post("/auth/login", { username, password })
-    .then((res) => {
-      localStorage.setItem("jwttoken", res.data.token);
-      localStorage.setItem("username", res.data.username);
+  return {
+    ...state,
+    jwtToken: user.token,
+    username: user.username,
+    fullName: fullName,
+    authenticated: user.authenticated,
+  };
+};
 
-      history.push("/users");
+// TODO: Buralarda state güncellemelerini düzenliyeceksin
+const loginFailed = (state, error) => {
+  return state;
+};
 
-      return {
-        ...initialState,
-        jwtToken: res.data.token,
-        username: res.data.username,
-        authenticated: true,
-      };
-    })
-    .catch((err) => {
-      console.log(err);
-      return {
-        ...initialState,
-      };
-    });
-
+const loginStarted = (state) => {
   return state;
 };

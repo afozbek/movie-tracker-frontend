@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { login } from "../../../store/user/actions";
-import axios from "../../../axios-instance";
 import Loading from "../../../components/common/Loading/Loading";
 
-const Login = ({ login, history, user }) => {
+const Login = ({ authLogin, history, user }) => {
   const [loading, setLoading] = useState(true);
   const [input, setInput] = useState({ username: "", password: "" });
 
@@ -32,17 +31,14 @@ const Login = ({ login, history, user }) => {
 
     const { username, password } = input;
 
-    setLoading(true);
-
-    await login(username, password, history);
-
-    setLoading(false);
+    authLogin(username, password, history);
   };
 
   const content = loading ? (
     <Loading />
   ) : (
     <form onSubmit={formSubmitHandler}>
+      Hello {user.username}
       <div className="inner-container">
         <h1 className="header">Login</h1>
         <div className="form-input">
@@ -91,8 +87,10 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchToProps = {
-  login,
-};
+const mapDispatchToProps = (dispatch) => ({
+  authLogin: (username, password, history) => {
+    dispatch(login(username, password, history));
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
