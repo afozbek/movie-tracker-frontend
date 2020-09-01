@@ -1,114 +1,100 @@
-import React, { Component, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../axios-instance";
 
 import Loading from "../../../components/common/Loading/Loading";
 
-class Login extends Component {
-  state = {
-    userData: {},
-    message: "",
-    loading: true,
-    input: {
-      username: "",
-      password: "",
-    },
-  };
+const Login = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState({});
+  const [input, setInput] = useState({ username: "", password: "" });
 
-  inputChangeHandler = (e) => {
+  const inputChangeHandler = (e) => {
     let inputName = e.target.name;
     let value = e.target.value;
 
-    this.setState((prevState) => ({
-      ...prevState,
-      input: {
-        ...prevState.input,
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
         [inputName]: value,
-      },
-    }));
+      };
+    });
   };
 
-  componentDidMount() {
-    this.setState({ loading: false });
-  }
+  useEffect(() => {
+    setLoading(false);
+  }, [loading]);
 
-  formSubmitHandler = (e) => {
+  const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    const { username, password } = this.state.input;
+    const { username, password } = input;
 
-    this.setState({
-      loading: true,
-    });
+    setLoading(true);
 
     axios
-      .post("http://localhost:8080/auth/login", { username, password })
+      .post("/auth/login", { username, password })
       .then((res) => {
         localStorage.setItem("jwttoken", res.data.token);
         localStorage.setItem("username", res.data.username);
 
-        this.setState({
-          userData: res.data,
-          loading: false,
-        });
+        setUserData(res.data);
+        setLoading(false);
 
-        this.props.history.push("/users");
+        props.history.push("/users");
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ loading: false });
+        setLoading(false);
       });
   };
 
-  render() {
-    const content = this.state.loading ? (
-      <Loading />
-    ) : (
-      <form onSubmit={this.formSubmitHandler}>
-        <div className="inner-container">
-          <h1 className="header">Login Form</h1>
-          <div className="form-input">
-            <label htmlFor="username" className="form-label">
-              <span className="form-label-text">Username: </span>
-              <input
-                onChange={this.inputChangeHandler}
-                className="form-text form-label-input"
-                placeholder="Enter Your username"
-                id="username"
-                type="text"
-                name="username"
-                required
-              />
-            </label>
-          </div>
-          <div className="form-input">
-            <label htmlFor="password" className="form-label">
-              <span className="form-label-text">Password: </span>
-              <input
-                onChange={this.inputChangeHandler}
-                placeholder="Enter your password"
-                className="form-text"
-                id="password"
-                type="password"
-                name="password"
-                required
-              />
-            </label>
-          </div>
-          <h3>{this.state.message}</h3>
-          <input className="button" type="submit" value="LOGIN" />
+  const content = loading ? (
+    <Loading />
+  ) : (
+    <form onSubmit={formSubmitHandler}>
+      <div className="inner-container">
+        <h1 className="header">Login</h1>
+        <div className="form-input">
+          <label htmlFor="username" className="form-label">
+            <span className="form-label-text">Username: </span>
+            <input
+              onChange={inputChangeHandler}
+              className="form-text form-label-input"
+              placeholder="Enter Your username"
+              id="username"
+              type="text"
+              name="username"
+              required
+            />
+          </label>
         </div>
-      </form>
-    );
+        <div className="form-input">
+          <label htmlFor="password" className="form-label">
+            <span className="form-label-text">Password: </span>
+            <input
+              onChange={inputChangeHandler}
+              placeholder="Enter your password"
+              className="form-text"
+              id="password"
+              type="password"
+              name="password"
+              required
+            />
+          </label>
+        </div>
+        <input className="button" type="submit" value="LOGIN" />
+      </div>
+    </form>
+  );
 
-    return (
-      <Fragment>
-        <Link to="/register">To Register</Link>
-        <Link to="/">Home Page</Link>
-        {content}
-      </Fragment>
-    );
-  }
-}
+  return (
+    <Fragment>
+      <Link to="/register">To Register</Link>
+      <Link to="/">Home Page</Link>
+      {content}
+    </Fragment>
+  );
+};
 
 export default Login;
