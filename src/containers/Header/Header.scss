@@ -1,0 +1,22 @@
+.m-header {
+  position: fixed;
+  top: 0;
+  top: 35px;
+
+  &__navbar {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+  }
+
+  &__navItem {
+    border: 1px solid #ef0555;
+    border-radius: 3px;
+    margin-right: 7px;
+    padding: 4px;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}

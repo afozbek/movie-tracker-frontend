@@ -1,33 +1,33 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Home = (props) => {
+const Navbar = (props) => {
   return (
     <>
-      <ul className="navbar">
-        <li className="nav-item">
+      <ul className="m-header__navbar">
+        <li className="m-header__navItem">
           <Link to="/">Home</Link>
         </li>
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/users">Users</Link>
         </li>
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/movies">Movies</Link>
         </li>
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/directors">Directors</Link>
         </li>
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/favlist">Your FavList</Link>
         </li>
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/watchlist">Your WatchList</Link>
         </li>
 
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/register">Register</Link>
         </li>
-        <li className="nav-item">
+        <li className="m-header__navItem">
           <Link to="/login">Login</Link>
         </li>
       </ul>
@@ -35,4 +35,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default Navbar;

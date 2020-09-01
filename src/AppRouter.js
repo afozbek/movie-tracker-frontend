@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Register from "./views/Auth/Register/Register";
-import Navbar from "./containers/Navbar";
+import Navbar from "./containers/Header/Navbar";
 import Login from "./views/Auth/Login/Login";
 import Users from "./views/Users/Users";
 import Movies from "./views/Movies/Movies";
@@ -25,13 +25,17 @@ import FavList from "./views/Users/FavLists/FavLists";
 import WatchList from "./views/Users/WatchList/WatchList";
 import DirectorMovies from "./views/Directors/DirectorMovies/DirectorMovies";
 import Home from "./views/Home";
+import Footer from "./containers/Footer/Footer";
+import Header from "./containers/Header/Header";
 
 const AppRouter = (props) => {
   return (
     <Router>
-      <div className="table-app">
-        <Navbar {...props} />
+      {/* Header */}
+      <Header {...props} />
 
+      {/* Views */}
+      <div className="m-container">
         <Switch>
           <Route path="/login" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
@@ -89,6 +93,9 @@ const AppRouter = (props) => {
           <Route path="/" exact component={Home} />
         </Switch>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </Router>
   );
 };
