@@ -1,15 +1,15 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 
 import axios from "../../axios-instance";
 import Loading from "../../components/common/Loading/Loading";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 
-export default class DeleteUserConfirm extends Component {
-  state = { userData: {}, loading: true };
+export default class DeleteMovieConfirm extends Component {
+  state = { movieData: {}, loading: true };
 
   confirmButtonHandler = (e) => {
-    const userId = this.state.userData.userId;
-    this.props.history.push(`/delete-user/${userId}`);
+    const movieId = this.props.match.params.movieId;
+    this.props.history.push(`/delete-movie/${movieId}`);
   };
 
   cancelButtonHandler = (e) => {
@@ -22,22 +22,19 @@ export default class DeleteUserConfirm extends Component {
       this.props.history.push("/login");
     }
 
-    const username = this.props.match.params.username;
-
+    const movieId = this.props.match.params.movieId;
     axios
-      .get("/admin/user/" + username, {
+      .get("/admin/movie/" + movieId, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((res) => {
         this.setState({
-          userData: res.data,
+          movieData: res.data,
           loading: false,
         });
       })
       .catch((err) => {
-        console.log(err);
         this.setState({
-          err,
           loading: false,
         });
       });
@@ -47,12 +44,12 @@ export default class DeleteUserConfirm extends Component {
     const content = this.state.loading ? (
       <Loading />
     ) : (
-      <span>{this.state.userData.username}</span>
+      <span>{this.state.movieData.name}</span>
     );
     return (
       <React.Fragment>
         <Logout {...this.props} />
-        <h1> Are you sure you want to delete user: {content}</h1>
+        <h1>Are you sure you want to delete movie: {content}</h1>
         <button className="button" onClick={this.confirmButtonHandler}>
           HELL YEAH!
         </button>

@@ -1,8 +1,8 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 
 import axios from "../../axios-instance";
 import Loading from "../../components/common/Loading/Loading";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 
 export default class DeleteUserConfirm extends Component {
   state = { userData: {}, loading: true };

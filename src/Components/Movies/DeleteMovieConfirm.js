@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from "./node_modules/react";
 
 import axios from "../../axios-instance";
-import Loading from "../../Util/Loading";
-import Logout from "../Auth/Logout/Logout";
+import Loading from "../../components/common/Loading/Loading";
+import Logout from "../../components/Auth/Logout/Logout";
 
 export default class DeleteMovieConfirm extends Component {
   state = { movieData: {}, loading: true };
 
-  confirmButtonHandler = e => {
+  confirmButtonHandler = (e) => {
     const movieId = this.props.match.params.movieId;
     this.props.history.push(`/delete-movie/${movieId}`);
   };
 
-  cancelButtonHandler = e => {
+  cancelButtonHandler = (e) => {
     this.props.history.goBack();
   };
 
@@ -25,17 +25,17 @@ export default class DeleteMovieConfirm extends Component {
     const movieId = this.props.match.params.movieId;
     axios
       .get("/admin/movie/" + movieId, {
-        headers: { Authorization: "Bearer " + jwtToken }
+        headers: { Authorization: "Bearer " + jwtToken },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           movieData: res.data,
-          loading: false
+          loading: false,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          loading: false
+          loading: false,
         });
       });
   }

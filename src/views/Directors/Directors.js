@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from "./node_modules/react";
-import { Link } from "./node_modules/react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
 import Director from "./Director";
 import Loading from "../../components/common/Loading/Loading";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 
 export default class Directors extends Component {
   state = {

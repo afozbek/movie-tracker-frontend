@@ -1,7 +1,7 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 
-import { Link } from "./node_modules/react-router-dom";
-import Logout from "../../components/Auth/Logout/Logout";
+import { Link } from "react-router-dom";
+import Logout from "../Auth/Logout/Logout";
 
 export default class MustAddDirector extends Component {
   addDirectorHandler = (e) => {

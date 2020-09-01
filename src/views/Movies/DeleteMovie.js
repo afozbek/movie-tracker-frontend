@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from "./node_modules/react";
+import React, { Component, Fragment } from "react";
 
-import { Link } from "./node_modules/react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 
 export default class DeleteMovie extends Component {
   state = {
@@ -17,10 +17,10 @@ export default class DeleteMovie extends Component {
       this.props.history.push("/login");
     }
 
-    const directorId = this.props.match.params.directorId;
+    const movieId = this.props.match.params.movieId;
 
     axios
-      .delete(`/admin/director/${directorId}`, {
+      .delete(`/admin/movie/${movieId}`, {
         headers: {
           Authorization: `Bearer ${jwttoken}`,
         },
@@ -30,7 +30,7 @@ export default class DeleteMovie extends Component {
 
         alert("Successfully deleted 😊");
 
-        this.props.history.push("/directors");
+        this.props.history.push("/movies");
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +41,7 @@ export default class DeleteMovie extends Component {
     return (
       <Fragment>
         <Logout {...this.props} />
-        <Link to="/directors">To Directors</Link>
+        <Link to="/movies">To Movies</Link>
         <Link to="/">Home Page</Link>
 
         <h1>Successfully deleted</h1>

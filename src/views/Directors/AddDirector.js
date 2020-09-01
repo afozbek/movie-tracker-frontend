@@ -1,15 +1,15 @@
-import React, { Component, Fragment } from "./node_modules/react";
+import React, { Component, Fragment } from "react";
 
-import { Link } from "./node_modules/react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 import Loading from "../../components/common/Loading/Loading";
 import { birthPlaces } from "./BirthPlaces";
 
-export default class UpdateDirector extends Component {
+export default class AddMovie extends Component {
   state = {
-    directorData: {},
+    directorData: [],
     birthPlaces,
     loading: true,
     message: "",
@@ -40,6 +40,7 @@ export default class UpdateDirector extends Component {
 
     this.setState((prevState) => ({
       ...prevState,
+      directorId: "",
       input: {
         ...prevState.input,
         [name]: value,
@@ -54,40 +55,24 @@ export default class UpdateDirector extends Component {
       this.props.history.push("/login");
     }
 
-    const directorId = this.props.match.params.directorId;
-
     axios
-      .get(`/admin/director/${directorId}`, {
+      .get(`/admin/director`, {
         headers: {
           Authorization: `Bearer ${jwttoken}`,
         },
       })
       .then((res) => {
-        const date = new Date(res.data.birthDate).toISOString().split("T")[0];
-
-        const birthPlaces = this.state.birthPlaces.filter(
-          (place) => place.place !== res.data.birthPlace
-        );
-
-        this.setState((prevState) => ({
-          ...prevState,
+        this.setState({
+          directorData: res.data,
           loading: false,
-          birthPlaces: [
-            { birthPlaceId: 7, place: res.data.birthPlace },
-            ...birthPlaces,
-          ],
-          input: {
-            ...prevState.input,
-            name: res.data.name,
-            surname: res.data.surname,
-            birthDate: date,
-            birthPlace: res.data.birthPlace,
-          },
-        }));
+        });
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ loading: false });
+
+        this.setState({
+          loading: false,
+        });
       });
   }
 
@@ -100,14 +85,17 @@ export default class UpdateDirector extends Component {
       this.props.history.push("/login");
     }
 
-    const directorId = this.props.match.params.directorId;
-
     const { name, surname, birthPlace, birthDate } = this.state.input;
 
     axios
-      .put(
-        `/admin/director/${directorId}`,
-        { name, surname, birthPlace, birthDate },
+      .post(
+        `/admin/director`,
+        {
+          name,
+          surname,
+          birthPlace,
+          birthDate,
+        },
         {
           headers: {
             Authorization: `Bearer ${jwttoken}`,
@@ -115,43 +103,42 @@ export default class UpdateDirector extends Component {
         }
       )
       .then((res) => {
-        this.setState({ loading: false });
+        this.setState({
+          movieData: res.data,
+          loading: false,
+        });
 
-        alert("Successfully updated 😊");
+        alert("Successfully created 😊");
 
         this.props.history.push("/directors");
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ loading: false });
+
+        this.setState({
+          loading: false,
+        });
       });
   };
 
   render() {
-    const birthPlaces = this.state.loading ? (
-      <Loading />
-    ) : this.state.birthPlaces ? (
-      this.state.birthPlaces.map((birthPlace) => (
-        <option key={birthPlace.birthPlaceId} value={birthPlace.place}>
-          {birthPlace.place}
-        </option>
-      ))
-    ) : null;
+    const birthPlaces = this.state.birthPlaces.map((birthPlace) => (
+      <option key={birthPlace.birthPlaceId} value={birthPlace.place}>
+        {birthPlace.place}
+      </option>
+    ));
 
     const form = (
       <>
         <form onSubmit={this.formSubmitHandler}>
           <div className="inner-container">
-            <h1 className="header">Update Director: {this.state.input.name}</h1>
-
             <div className="form-input">
               <label htmlFor="name" className="form-label">
                 <span className="form-label-text">Name:</span>
                 <input
                   onChange={this.inputChangeHandler}
                   className="form-text form-label-input"
-                  placeholder="Enter Director Name"
-                  value={this.state.input.name}
+                  placeholder="Enter Director's Name"
                   id="name"
                   type="text"
                   name="name"
@@ -166,18 +153,18 @@ export default class UpdateDirector extends Component {
                 <input
                   onChange={this.inputChangeHandler}
                   className="form-text form-label-input"
-                  placeholder="Enter Director Surname"
-                  value={this.state.input.surname}
+                  placeholder="Enter Director's Surname"
                   id="surname"
                   type="text"
                   name="surname"
+                  required
                 />
               </label>
             </div>
 
             <div className="form-input">
-              <label htmlFor="birthPlace" className="form-label">
-                <span className="form-label-text">Birth Place:</span>
+              <label htmlFor="director" className="form-label">
+                <span className="form-label-text">BirthPlace:</span>
                 <select onChange={this.dropDownChangeHandler} name="birthPlace">
                   {birthPlaces}
                 </select>
@@ -190,7 +177,6 @@ export default class UpdateDirector extends Component {
                 <input
                   onChange={this.inputChangeHandler}
                   className="form-text"
-                  value={this.state.input.birthDate}
                   id="birthDate"
                   type="date"
                   name="birthDate"
@@ -200,7 +186,7 @@ export default class UpdateDirector extends Component {
             </div>
 
             <h3>{this.state.message}</h3>
-            <input className="button" type="submit" value="UPDATE" />
+            <input className="button" type="submit" value="ADD DIRECTOR" />
           </div>
         </form>
         <button className="button" onClick={() => this.props.history.goBack()}>
@@ -210,10 +196,11 @@ export default class UpdateDirector extends Component {
     );
 
     const content = this.state.loading ? <Loading /> : form;
+
     return (
       <Fragment>
         <Logout {...this.props} />
-        <Link to="/directors">See Directors</Link>
+        <Link to="/directors">To Directors</Link>
         <Link to="/">Home Page</Link>
         {content}
       </Fragment>

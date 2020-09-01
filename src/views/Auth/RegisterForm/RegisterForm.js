@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from "./node_modules/react";
 import { Link } from "./node_modules/react-router-dom";
-import axios from "../../axios-instance";
-import Logout from "../../components/Auth/Logout/Logout";
+import axios from "./node_modules/axios";
 
 export default class RegisterForm extends Component {
   state = {
-    jwttoken: "",
     message: "",
     input: {
       firstName: "",
@@ -43,21 +41,8 @@ export default class RegisterForm extends Component {
     }));
   };
 
-  componentDidMount() {
-    const jwttoken = localStorage.getItem("jwttoken");
-
-    if (!jwttoken) {
-      this.props.history.push("/login");
-    }
-
-    this.setState({
-      jwttoken,
-    });
-  }
-
   formSubmitHandler = (e) => {
     e.preventDefault();
-
     const {
       firstName,
       lastName,
@@ -75,17 +60,16 @@ export default class RegisterForm extends Component {
     };
 
     axios
-      .post("/admin/user", responseData, {
-        headers: { Authorization: "Bearer " + this.state.jwttoken },
-      })
+      .post("http://localhost:8080/auth/register", responseData)
       .then((res) => {
         this.setState({
+          user: res.data,
           message: res.data.username + " successfully registered 😊",
         });
 
-        alert("Successfully created user 😊");
+        alert("Successfully registered 😊");
 
-        this.props.history.push("/users");
+        this.props.history.push("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -94,12 +78,13 @@ export default class RegisterForm extends Component {
   };
 
   render() {
-    const form = (
-      <>
+    return (
+      <Fragment>
+        <Link to="/login">To login</Link>
+        <Link to="/users">See Users</Link>
         <form className="form" onSubmit={this.formSubmitHandler}>
           <div className="inner-container">
-            <h1 className="header">Create User</h1>
-
+            <h1 className="header">Register Page</h1>
             <div className="form-input">
               <label htmlFor="firstName" className="form-label">
                 <span className="form-label-text">Firstname :</span>
@@ -107,13 +92,12 @@ export default class RegisterForm extends Component {
                   onChange={this.inputChangeHandler}
                   className="form-text form-label-input"
                   id="firstName"
-                  placeholder="Enter your Firstname"
                   type="text"
                   name="firstName"
+                  required
                 />
               </label>
             </div>
-
             <div className="form-input">
               <label htmlFor="lastName" className="form-label">
                 <span className="form-label-text">Lastname:</span>
@@ -121,13 +105,12 @@ export default class RegisterForm extends Component {
                   onChange={this.inputChangeHandler}
                   className="form-text form-label-input"
                   id="lastName"
-                  placeholder="Enter your Lastname"
                   type="text"
                   name="lastName"
+                  required
                 />
               </label>
             </div>
-
             <div className="form-input">
               <label htmlFor="username" className="form-label">
                 <span className="form-label-text">Username:</span>
@@ -136,7 +119,6 @@ export default class RegisterForm extends Component {
                   className="form-text form-label-input"
                   id="username"
                   type="text"
-                  placeholder="Enter your username"
                   name="username"
                   required
                 />
@@ -150,7 +132,6 @@ export default class RegisterForm extends Component {
                   onChange={this.inputChangeHandler}
                   className="form-text"
                   id="password"
-                  placeholder="Enter your password"
                   type="password"
                   name="password"
                   required
@@ -160,7 +141,7 @@ export default class RegisterForm extends Component {
 
             <div className="form-input">
               <label htmlFor="confirm" className="form-label">
-                <span className="form-label-text">Is Admin:</span>
+                <span className="form-label-text">Are you an admin:</span>
                 <input
                   onChange={this.confirmChangeHandler}
                   className="form-text"
@@ -172,29 +153,9 @@ export default class RegisterForm extends Component {
             </div>
 
             <h2>{this.state.message}</h2>
-
-            <input
-              style={{ marginTop: 8, marginBottom: 6 }}
-              className="button"
-              type="submit"
-              value="CREATE USER"
-            />
+            <input className="button" type="submit" value="REGISTER" />
           </div>
         </form>
-        <button className="button" onClick={() => this.props.history.goBack()}>
-          GO BACK
-        </button>
-      </>
-    );
-
-    return (
-      <Fragment>
-        <Logout {...this.props} />
-
-        <Link to="/users">See Users</Link>
-        <Link to="/">Home Page</Link>
-
-        {form}
       </Fragment>
     );
   }

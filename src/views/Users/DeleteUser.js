@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from "./node_modules/react";
+import React, { Component, Fragment } from "react";
 
-import { Link } from "./node_modules/react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 
-export default class DeleteMovie extends Component {
+export default class DeleteUser extends Component {
   state = {
     message: "",
   };
@@ -17,20 +17,22 @@ export default class DeleteMovie extends Component {
       this.props.history.push("/login");
     }
 
-    const directorId = this.props.match.params.directorId;
+    const userId = this.props.match.params.userId;
 
     axios
-      .delete(`/admin/director/${directorId}`, {
+      .delete(`/admin/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${jwttoken}`,
         },
       })
       .then((res) => {
-        this.setState({ message: res.data });
+        this.setState({
+          message: res.data.message,
+        });
 
-        alert("Successfully deleted 😊");
+        alert("Successfully deleted user 😊");
 
-        this.props.history.push("/directors");
+        this.props.history.push("/users");
       })
       .catch((err) => {
         console.log(err);
@@ -41,10 +43,10 @@ export default class DeleteMovie extends Component {
     return (
       <Fragment>
         <Logout {...this.props} />
-        <Link to="/directors">To Directors</Link>
+        <Link to="/users">To Users</Link>
         <Link to="/">Home Page</Link>
 
-        <h1>Successfully deleted</h1>
+        <h1>{this.state.message}</h1>
       </Fragment>
     );
   }

@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from "./node_modules/react";
+import React, { Component, Fragment } from "react";
 
-import { Link } from "./node_modules/react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
-import Logout from "../../components/Auth/Logout/Logout";
+import Logout from "../Auth/Logout/Logout";
 import Loading from "../../components/common/Loading/Loading";
 
-export default class UpdateMovie extends Component {
+export default class AddMovie extends Component {
   state = {
     directorData: [],
     loading: true,
@@ -18,24 +18,11 @@ export default class UpdateMovie extends Component {
     ],
     input: {
       name: "",
-      genreType: "",
-      directorId: "",
+      genreType: "COMEDY",
       rating: "",
       releaseDate: "",
+      directorId: "",
     },
-  };
-
-  dropDownChangeHandler = (e) => {
-    let value = e.target.value;
-    let name = e.target.name;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      input: {
-        ...prevState.input,
-        [name]: value,
-      },
-    }));
   };
 
   inputChangeHandler = (e) => {
@@ -51,6 +38,20 @@ export default class UpdateMovie extends Component {
     }));
   };
 
+  dropDownChangeHandler = (e) => {
+    let value = e.target.value;
+    let name = e.target.name;
+
+    this.setState((prevState) => ({
+      ...prevState,
+      directorId: "",
+      input: {
+        ...prevState.input,
+        [name]: value,
+      },
+    }));
+  };
+
   componentDidMount() {
     const jwttoken = localStorage.getItem("jwttoken");
 
@@ -58,74 +59,32 @@ export default class UpdateMovie extends Component {
       this.props.history.push("/login");
     }
 
-    const movieId = this.props.match.params.movieId;
-
     axios
-      .get(`/admin/movie/${movieId}`, {
+      .get(`/admin/director`, {
         headers: {
           Authorization: `Bearer ${jwttoken}`,
         },
       })
       .then((res) => {
-        const movieData = res.data;
-        console.log("TCL: UpdateMovie -> movieData", movieData);
-
-        const releaseDate = new Date(movieData.releaseDate)
-          .toISOString()
-          .split("T")[0];
-
-        axios
-          .get(`/admin/director`, {
-            headers: {
-              Authorization: `Bearer ${jwttoken}`,
+        if (res.data.length < 1) {
+          this.props.history.push("/must-add-director");
+        } else {
+          this.setState((prevState) => ({
+            ...prevState,
+            directorData: res.data,
+            loading: false,
+            input: {
+              ...prevState.input,
+              directorId: res.data[0].directorId,
             },
-          })
-          .then((res) => {
-            const directors = res.data;
-
-            const filteredGenres = this.state.genreTypes.filter(
-              (genre) => genre.value !== movieData.genreType
-            );
-            const movieDirector = directors.filter(
-              (director) =>
-                director.directorId === movieData.director.directorId
-            );
-
-            const filteredDirectors = directors.filter(
-              (director) =>
-                director.directorId !== movieData.director.directorId
-            );
-
-            const directorData = [...movieDirector, ...filteredDirectors];
-
-            this.setState((prevState) => ({
-              ...prevState,
-              loading: false,
-              directorData,
-              genreTypes: [
-                { id: 5, value: movieData.genreType },
-                ...filteredGenres,
-              ],
-              input: {
-                ...prevState.input,
-                name: movieData.name,
-                rating: movieData.rating,
-                releaseDate,
-                directorId: directorData[0].directorId,
-                genreType: movieData.genreType,
-              },
-            }));
-          })
-          .catch((err) => {
-            console.log(err);
-            this.setState({
-              loading: false,
-            });
-          });
+          }));
+        }
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+        });
       });
   }
 
@@ -138,25 +97,23 @@ export default class UpdateMovie extends Component {
       this.props.history.push("/login");
     }
 
-    const movieId = this.props.match.params.movieId;
-
     const {
       name,
       genreType,
       rating,
-      releaseDate,
       directorId,
+      releaseDate,
     } = this.state.input;
 
     axios
-      .put(
-        `/admin/movie/${movieId}`,
+      .post(
+        `/admin/movie`,
         {
           name,
+          genreType,
           rating,
           releaseDate,
-          genreType,
-          director: { directorId },
+          director: { directorId: directorId },
         },
         {
           headers: {
@@ -166,16 +123,19 @@ export default class UpdateMovie extends Component {
       )
       .then((res) => {
         this.setState({
+          movieData: res.data,
           loading: false,
         });
 
-        alert("Successfully updated 😊");
+        alert("Successfully created movie 😊");
 
         this.props.history.push("/movies");
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+        });
       });
   };
 
@@ -200,16 +160,14 @@ export default class UpdateMovie extends Component {
       <>
         <form onSubmit={this.formSubmitHandler}>
           <div className="inner-container">
-            <h1 className="header">Update Movie: {this.state.input.name}</h1>
             <div className="form-input">
               <label htmlFor="name" className="form-label">
-                <span className="form-label-text">Name:</span>
+                <span className="form-label-text">Movie Name:</span>
                 <input
                   onChange={this.inputChangeHandler}
                   className="form-text form-label-input"
-                  placeholder="Enter Movie Name"
+                  placeholder="Enter Movie Name 😅"
                   id="name"
-                  value={this.state.input.name}
                   type="text"
                   name="name"
                   required
@@ -233,10 +191,10 @@ export default class UpdateMovie extends Component {
                   onChange={this.inputChangeHandler}
                   className="form-text"
                   id="rating"
+                  placeholder="Enter IMDB Rating 😀"
                   max={10}
                   min={1}
                   step={0.5}
-                  value={this.state.input.rating}
                   type="number"
                   name="rating"
                   required
@@ -251,7 +209,6 @@ export default class UpdateMovie extends Component {
                   onChange={this.inputChangeHandler}
                   className="form-text"
                   id="releaseDate"
-                  value={this.state.input.releaseDate}
                   type="date"
                   name="releaseDate"
                   required
@@ -267,8 +224,9 @@ export default class UpdateMovie extends Component {
                 </select>
               </label>
             </div>
+
             <h3>{this.state.message}</h3>
-            <input className="button" type="submit" value="UPDATE" />
+            <input className="button" type="submit" value="ADD MOVIE" />
           </div>
         </form>
         <button className="button" onClick={() => this.props.history.goBack()}>
@@ -282,10 +240,8 @@ export default class UpdateMovie extends Component {
     return (
       <Fragment>
         <Logout {...this.props} />
-
         <Link to="/movies">To Movies</Link>
         <Link to="/">Home Page</Link>
-
         {content}
       </Fragment>
     );

@@ -1,15 +1,15 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 import Movie from "../../Movies/Movie";
 import Loading from "../../../components/common/Loading/Loading";
 
-import { Link } from "./node_modules/react-router-dom";
-import Logout from "../../../components/Auth/Logout/Logout";
+import { Link } from "react-router-dom";
+import Logout from "../../Auth/Logout/Logout";
 
 import axios from "../../../axios-instance";
 
-export default class WatchList extends Component {
+export default class FavList extends Component {
   state = {
-    watchlist: [],
+    favlist: [],
     movies: [],
     loading: true,
     input: {
@@ -17,8 +17,11 @@ export default class WatchList extends Component {
     },
   };
 
-  watchRemoveButtonHandler = (movieId) => {
+  favRemoveButtonHandler = (movieId) => {
     const jwttoken = localStorage.getItem("jwttoken");
+
+    console.log("FAV REMOVE HANDLER");
+
     if (!jwttoken) {
       this.props.history.push("/login");
     }
@@ -26,12 +29,12 @@ export default class WatchList extends Component {
     const username = localStorage.getItem("username");
 
     axios
-      .delete(`/${username}/watchList/${movieId}`, {
+      .delete(`/${username}/favList/${movieId}`, {
         headers: { Authorization: "Bearer " + jwttoken },
       })
       .then((res) => {
         this.setState({
-          watchlist: res.data,
+          favlist: res.data,
         });
       })
       .catch((err) => {
@@ -49,12 +52,12 @@ export default class WatchList extends Component {
     const username = localStorage.getItem("username");
 
     axios
-      .get(`/${username}/watchList`, {
+      .get(`/${username}/favList`, {
         headers: { Authorization: "Bearer " + jwttoken },
       })
       .then((res) => {
         this.setState({
-          watchlist: res.data,
+          favlist: res.data,
           loading: false,
         });
       })
@@ -102,13 +105,13 @@ export default class WatchList extends Component {
   };
 
   render() {
-    const movies = this.state.watchlist ? (
-      this.state.watchlist.map((movie) => {
+    const movies = this.state.favlist ? (
+      this.state.favlist.map((movie) => {
         return (
           <Movie
             {...this.props}
-            watchRemoveButtonHandler={this.watchRemoveButtonHandler}
-            isWatch={true}
+            favRemoveButtonHandler={this.favRemoveButtonHandler}
+            isFav={true}
             key={movie.movieId}
             movieData={movie}
           />
@@ -118,19 +121,18 @@ export default class WatchList extends Component {
       <Loading />
     );
 
-    const movieTable = this.state.watchlist ? (
-      this.state.watchlist.length === 0 ? (
+    const movieTable = this.state.favlist ? (
+      this.state.favlist.length === 0 ? (
         <h1>You dont have movies</h1>
       ) : (
         <table>
           <thead>
             <tr>
-              <th style={{ textAlign: "center" }}>REMOVE FROM WATCH LIST</th>
+              <th style={{ textAlign: "center" }}>REMOVE FROM FAV LIST</th>
               <th style={{ textAlign: "center" }}>ID</th>
               <th style={{ textAlign: "center" }}>Movie Name</th>
               <th style={{ textAlign: "center" }}>Genre</th>
               <th style={{ textAlign: "center" }}>IMDB Rating</th>
-              <th style={{ textAlign: "center" }}>Release Date</th>
               <th style={{ textAlign: "center" }}>Director</th>
               <th style={{ textAlign: "center" }}>UPDATE</th>
               <th style={{ textAlign: "center" }}>DELETE</th>
@@ -146,7 +148,7 @@ export default class WatchList extends Component {
       <Loading />
     ) : (
       <div>
-        <h1>Your WatchList</h1>
+        <h1>Your FavList</h1>
         <div>{movieTable}</div>
         <Link to="/" style={{ marginTop: 30 }}>
           Home Page

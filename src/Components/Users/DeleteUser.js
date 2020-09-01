@@ -1,53 +1,53 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from "./node_modules/react";
 
-import { Link } from "react-router-dom";
+import { Link } from "./node_modules/react-router-dom";
 
 import axios from "../../axios-instance";
-import Logout from "../Auth/Logout/Logout";
+import Logout from "../../components/Auth/Logout/Logout";
 
 export default class DeleteUser extends Component {
-    state = {
-        message: ""
-    };
+  state = {
+    message: "",
+  };
 
-    componentDidMount() {
-        const jwttoken = localStorage.getItem("jwttoken");
+  componentDidMount() {
+    const jwttoken = localStorage.getItem("jwttoken");
 
-        if (!jwttoken) {
-            this.props.history.push("/login");
-        }
-
-        const userId = this.props.match.params.userId;
-
-        axios
-            .delete(`/admin/user/${userId}`, {
-                headers: {
-                    Authorization: `Bearer ${jwttoken}`
-                }
-            })
-            .then(res => {
-                this.setState({
-                    message: res.data.message
-                });
-
-                alert("Successfully deleted user 😊");
-
-                this.props.history.push("/users");
-            })
-            .catch(err => {
-                console.log(err);
-            });
+    if (!jwttoken) {
+      this.props.history.push("/login");
     }
 
-    render() {
-        return (
-            <Fragment>
-                <Logout {...this.props} />
-                <Link to="/users">To Users</Link>
-                <Link to="/">Home Page</Link>
+    const userId = this.props.match.params.userId;
 
-                <h1>{this.state.message}</h1>
-            </Fragment>
-        );
-    }
+    axios
+      .delete(`/admin/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${jwttoken}`,
+        },
+      })
+      .then((res) => {
+        this.setState({
+          message: res.data.message,
+        });
+
+        alert("Successfully deleted user 😊");
+
+        this.props.history.push("/users");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <Logout {...this.props} />
+        <Link to="/users">To Users</Link>
+        <Link to="/">Home Page</Link>
+
+        <h1>{this.state.message}</h1>
+      </Fragment>
+    );
+  }
 }
