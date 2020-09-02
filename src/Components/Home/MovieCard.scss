@@ -7,6 +7,10 @@
   flex-direction: column;
   position: relative;
 
+  &__navLink {
+    text-decoration: none;
+  }
+
   &__point {
     display: flex;
     justify-content: flex-start;
