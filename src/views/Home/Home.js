@@ -18,7 +18,6 @@ const Home = (props) => {
 
   return (
     <div className="m-home">
-      <h1 className="header">HOME PAGE</h1>
       <div className="m-home__movieList">{movieList}</div>
     </div>
   );
