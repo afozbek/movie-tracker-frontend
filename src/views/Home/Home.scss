@@ -1,0 +1,12 @@
+.m-home {
+  &__movieList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 1080px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+}
