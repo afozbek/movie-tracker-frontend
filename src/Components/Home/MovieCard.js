@@ -28,7 +28,11 @@ const MovieCard = ({ movie }) => {
             {movie.vote_average}
           </div>
 
-          <h3 className="m-movieCard__title">{movie.title}</h3>
+          <h3 className="m-movieCard__title">
+            {movie.title.length > 20
+              ? movie.title.slice(0, 20) + "..."
+              : movie.title}
+          </h3>
 
           <div className="m-movieCard__genreList">
             {movie.genre_ids.map((genreId) => (
