@@ -13,9 +13,7 @@ export const checkUserAuthentication = () => {
 
     if (jwtToken) {
       axios
-        .get("/checkUserAuthentication", {
-          params: { jwtToken },
-        })
+        .get("/checkUserAuthentication")
         .then((res) => {
           const userData = {
             fullName: res.data.user.firstName + " " + res.data.user.lastName,
