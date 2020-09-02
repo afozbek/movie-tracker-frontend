@@ -23,8 +23,7 @@ import MustAddDirector from "./views/Movies/MustAddDirector";
 import FavList from "./views/Users/FavLists/FavLists";
 import WatchList from "./views/Users/WatchList/WatchList";
 import DirectorMovies from "./views/Directors/DirectorMovies/DirectorMovies";
-import Home from "./views/Home";
-import Footer from "./containers/Footer/Footer";
+import Home from "./views/Home/Home";
 import Header from "./containers/Header/Header";
 
 const AppRouter = (props) => {
@@ -94,7 +93,6 @@ const AppRouter = (props) => {
       </div>
 
       {/* Footer */}
-      <Footer />
     </Router>
   );
 };
