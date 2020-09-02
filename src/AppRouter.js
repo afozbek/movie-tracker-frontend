@@ -25,6 +25,7 @@ import WatchList from "./views/Users/WatchList/WatchList";
 import DirectorMovies from "./views/Directors/DirectorMovies/DirectorMovies";
 import Home from "./views/Home/Home";
 import Header from "./containers/Header/Header";
+import Movie from "./views/NewMovies/Movie";
 
 const AppRouter = (props) => {
   return (
@@ -52,6 +53,7 @@ const AppRouter = (props) => {
 
           {/* MOVIES */}
           <Route path="/movies" exact component={Movies} />
+          <Route path="/movie/:movieId" exact component={Movie} />
           <Route path="/update-movie/:movieId" exact component={UpdateMovie} />
           <Route
             path="/delete-movie-confirm/:movieId"
