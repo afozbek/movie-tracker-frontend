@@ -28,7 +28,6 @@ export const userReducer = (state = initialState, action) => {
 };
 
 const loginSuccess = (state, data) => {
-  console.log(data);
   const { fullName, user } = data;
 
   localStorage.setItem("jwttoken", user.token);

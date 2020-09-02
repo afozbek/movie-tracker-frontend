@@ -9,15 +9,14 @@ import axios from "../../axios-movie-instance";
 
 const API_KEY = "174e6bfc840b640cbba20b4f1eec48a8";
 
-export const getMovies = (currentPage = 1) => {
+export const getMovies = (filterType, currentPage = 1) => {
+  console.log(filterType);
   return (dispatch) => {
     axios
-      .get("/movie/popular", {
+      .get(`/movie/${filterType}`, {
         params: { api_key: API_KEY, page: currentPage },
       })
       .then((res) => {
-        console.log("İstek Atıldı");
-
         dispatch(getMoviesSuccess(res.data));
       })
       .catch((err) => {
