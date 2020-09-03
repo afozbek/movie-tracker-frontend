@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { login } from "../../../store/user/actions";
-import Loading from "../../../components/common/Loading/Loading";
+import Loading from "../../../Components/common/Loading/Loading";
 
 const Login = ({ authLogin, history, user }) => {
   const [loading, setLoading] = useState(true);

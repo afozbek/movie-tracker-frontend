@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
 import { getMovies } from "../../store/movies/actions";
-import MovieCard from "../../components/Home/MovieCard/MovieCard";
-import MovieFilter from "../../components/Home/MovieFilter/MovieFilter";
+import MovieCard from "../../Components/Home/MovieCard/MovieCard";
+import MovieFilter from "../../Components/Home/MovieFilter/MovieFilter";
 
 import "./Home.scss";
 
