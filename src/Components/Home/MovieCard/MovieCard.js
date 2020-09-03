@@ -1,9 +1,9 @@
-import React from "./node_modules/react";
+import React from "react";
 
-import { NavLink } from "./node_modules/react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { FontAwesomeIcon } from "./node_modules/@fortawesome/react-fontawesome";
-import { faStar } from "./node_modules/@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "act-fontawesome";
+import { faStar } from "ee-solid-svg-icons";
 import { genres } from "../../../utils";
 
 import "./MovieCard.scss";
