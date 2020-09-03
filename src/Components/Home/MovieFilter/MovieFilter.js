@@ -1,6 +1,6 @@
-import React from "react";
+import React from "./node_modules/react";
 
-import { connect } from "react-redux";
+import { connect } from "./node_modules/react-redux";
 import { changeMovieFilterType } from "../../../store/movies/actions";
 import "./MovieFilter.scss";
 
