@@ -8,10 +8,13 @@ import MovieFilter from "../../Components/Home/MovieFilter/MovieFilter";
 import "./Home.scss";
 
 const Home = (props) => {
+  const { filterType } = props.movies;
+
   useEffect(() => {
     const currentPage = props.movies.currentPage;
-    props.getMovies(props.movies.filterType, currentPage);
-  }, [props.movies.filterType]);
+    props.getMovies(filterType, currentPage);
+    // eslint-disable-next-line
+  }, [filterType]);
 
   const movieList = props.movies.movieList.map((movie) => (
     <MovieCard key={movie.id} movie={movie} />
