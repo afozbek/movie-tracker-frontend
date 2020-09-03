@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { genres } from "../../utils";
+import { genres } from "../../../utils";
 
 import "./MovieCard.scss";
 
