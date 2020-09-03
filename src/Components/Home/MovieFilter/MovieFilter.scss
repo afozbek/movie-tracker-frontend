@@ -1,0 +1,18 @@
+.m-movieFilter {
+  margin-bottom: 30px;
+  &__btn {
+    padding: 10px;
+    cursor: pointer;
+    font-family: "Netflix Sans";
+    background: #24292e;
+    border: 0.5px solid #cccccc30;
+    border-radius: 2px;
+    color: #fff;
+    margin: 5px;
+
+    &.-active {
+      background: green;
+      border-color: green;
+    }
+  }
+}
