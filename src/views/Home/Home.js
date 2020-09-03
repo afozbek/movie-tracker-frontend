@@ -2,23 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
 import { getMovies } from "../../store/movies/actions";
-import MovieCard from "../../components/Home/MovieCard";
+import MovieCard from "../../components/Home/MovieCard/MovieCard";
+import MovieFilter from "../../components/Home/MovieFilter/MovieFilter";
 
 import "./Home.scss";
-import MainMovie from "./../../components/Home/MainMovie";
-import MovieFilter from "./../../components/Home/MovieFilter";
 
 const Home = (props) => {
-  const [filterType, setFilterType] = useState("popular");
-
   useEffect(() => {
     const currentPage = props.movies.currentPage;
-    props.getMovies(filterType, currentPage);
-  }, [filterType]);
-
-  const filterBtnClickHandler = (e) => {
-    setFilterType(e.target.dataset.filterType);
-  };
+    props.getMovies(props.movies.filterType, currentPage);
+  }, [props.movies.filterType]);
 
   const movieList = props.movies.movieList.map((movie) => (
     <MovieCard key={movie.id} movie={movie} />
@@ -26,7 +19,7 @@ const Home = (props) => {
 
   return (
     <div className="m-home">
-      {/* <MovieFilter filterBtnClickHandler={filterBtnClickHandler} /> */}
+      <MovieFilter />
 
       {/* <MainMovie /> */}
 
