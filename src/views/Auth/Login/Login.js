@@ -38,7 +38,6 @@ const Login = ({ authLogin, history, user }) => {
     <Loading />
   ) : (
     <form onSubmit={formSubmitHandler}>
-      Hello {user.username}
       <div className="inner-container">
         <h1 className="header">Login</h1>
         <div className="form-input">
@@ -74,13 +73,7 @@ const Login = ({ authLogin, history, user }) => {
     </form>
   );
 
-  return (
-    <Fragment>
-      <Link to="/register">To Register</Link>
-      <Link to="/">Home Page</Link>
-      {content}
-    </Fragment>
-  );
+  return <Fragment>{content}</Fragment>;
 };
 
 const mapStateToProps = (state) => ({

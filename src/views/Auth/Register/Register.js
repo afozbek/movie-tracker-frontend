@@ -66,8 +66,6 @@ const Register = (props) => {
 
   return (
     <Fragment>
-      <Link to="/login">To login</Link>
-      <Link to="/users">See Users</Link>
       <form className="form" onSubmit={formSubmitHandler}>
         <div className="inner-container">
           <h1 className="header">Register Page</h1>
