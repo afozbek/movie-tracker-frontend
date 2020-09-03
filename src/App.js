@@ -9,6 +9,7 @@ import AppRouter from "./AppRouter";
 const App = (props) => {
   useEffect(() => {
     props.checkUserAuthentication();
+    // eslint-disable-next-line
   }, []);
   return <AppRouter {...props} />;
 };
