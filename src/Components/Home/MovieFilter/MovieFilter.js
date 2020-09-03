@@ -4,30 +4,39 @@ import { connect } from "react-redux";
 import { changeMovieFilterType } from "../../../store/movies/actions";
 import "./MovieFilter.scss";
 
+import { filterTypes } from "../../../utils";
+
 const MovieFilter = (props) => {
-  return (
-    <div
-      className="m-movieFilter"
-      onClick={(e) => props.changeMovieFilterType(e.target.dataset.filterType)}
-    >
-      <button className="m-movieFilter__btn" data-filter-type="popular">
-        Popular
+  const filterButtons = filterTypes.map((btn) => {
+    let classes = "m-movieFilter__btn";
+
+    if (btn.filterType === props.movies.filterType) {
+      classes += " -active";
+    }
+
+    return (
+      <button
+        className={classes}
+        key={btn.id}
+        data-filter-type={btn.filterType}
+        onClick={(e) =>
+          props.changeMovieFilterType(e.target.dataset.filterType)
+        }
+      >
+        {btn.filterText}
       </button>
-      <button className="m-movieFilter__btn" data-filter-type="top_rated">
-        Top Rated
-      </button>
-      <button className="m-movieFilter__btn" data-filter-type="now_playing">
-        Now Playing
-      </button>
-      <button className="m-movieFilter__btn" data-filter-type="upcoming">
-        Upcoming
-      </button>
-    </div>
-  );
+    );
+  });
+
+  return <div className="m-movieFilter">{filterButtons}</div>;
 };
+
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+});
 
 const mapDispatchToProps = {
   changeMovieFilterType,
 };
 
-export default connect(null, mapDispatchToProps)(MovieFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieFilter);

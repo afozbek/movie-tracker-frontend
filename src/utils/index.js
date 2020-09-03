@@ -19,3 +19,26 @@ export const genres = {
   10752: "War",
   37: "Western",
 };
+
+export const filterTypes = [
+  {
+    id: 1,
+    filterType: "popular",
+    filterText: "Popular",
+  },
+  {
+    id: 2,
+    filterType: "top_rated",
+    filterText: "Top Rated",
+  },
+  {
+    id: 3,
+    filterType: "now_playing",
+    filterText: "Now Playing",
+  },
+  {
+    id: 4,
+    filterType: "upcoming",
+    filterText: "Upcoming",
+  },
+];

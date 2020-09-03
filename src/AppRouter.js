@@ -3,25 +3,18 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Register from "./views/Auth/Register/Register";
 import Login from "./views/Auth/Login/Login";
-import Users from "./views/Users/Users";
 import Movies from "./views/Movies/Movies";
 import Directors from "./views/Directors/Directors";
-import UpdateUser from "./views/Users/UpdateUser";
 import UpdateMovie from "./views/Movies/UpdateMovie";
 import UpdateDirector from "./views/Directors/UpdateDirector";
 import Logout from "./views/Auth/Logout/Logout";
 import AddMovie from "./views/Movies/AddMovie";
-import AddUser from "./views/Users/AddUser";
 import AddDirector from "./views/Directors/AddDirector";
 import DeleteMovie from "./views/Movies/DeleteMovie";
 import DeleteMovieConfirm from "./views/Movies/DeleteMovieConfirm";
-import DeleteUser from "./views/Users/DeleteUser";
-import DeleteUserConfirm from "./views/Users/DeleteUserConfirm";
 import DeleteDirector from "./views/Directors/DeleteDirector";
 import DeleteDirectorConfirm from "./views/Directors/DeleteDirectorConfirm";
 import MustAddDirector from "./views/Movies/MustAddDirector";
-import FavList from "./views/Users/FavLists/FavLists";
-import WatchList from "./views/Users/WatchList/WatchList";
 import DirectorMovies from "./views/Directors/DirectorMovies/DirectorMovies";
 import Home from "./views/Home/Home";
 import Header from "./containers/Header/Header";
@@ -41,15 +34,6 @@ const AppRouter = (props) => {
           <Route path="/register" exact component={Register} />
 
           {/* USERS */}
-          <Route path="/users" exact component={Users} />
-          <Route path="/update-user/:username" exact component={UpdateUser} />
-          <Route path="/delete-user/:userId" exact component={DeleteUser} />
-          <Route
-            path="/delete-user-confirm/:username"
-            exact
-            component={DeleteUserConfirm}
-          />
-          <Route path="/add-user" exact component={AddUser} />
 
           {/* MOVIES */}
           <Route path="/movies" exact component={Movies} />
@@ -82,14 +66,12 @@ const AppRouter = (props) => {
             component={DeleteDirectorConfirm}
           />
           <Route path="/add-director" exact component={AddDirector} />
-          <Route path="/favlist" exact component={FavList} />
           <Route
             path="/directorMovies/:directorId"
             exact
             component={DirectorMovies}
           />
           {/* ----- */}
-          <Route path="/watchlist" exact component={WatchList} />
           <Route path="/" exact component={Home} />
         </Switch>
       </div>
