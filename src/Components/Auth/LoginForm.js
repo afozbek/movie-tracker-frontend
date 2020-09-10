@@ -1,7 +1,7 @@
 import React from "react";
 
 import AnimatedInput from "../common/inputs/AnimatedInput";
-import CustomCheckbox from "../common/inputs/CustomCheckbox";
+// import CustomCheckbox from "../common/inputs/CustomCheckbox";
 
 const LoginForm = ({ formSubmitHandler, inputChangeHandler }) => {
   return (
@@ -29,16 +29,16 @@ const LoginForm = ({ formSubmitHandler, inputChangeHandler }) => {
 
       <div className="m-loginForm__group -mg-lg">
         <div className="m-loginForm__rememberWrapper">
-          <CustomCheckbox
+          {/* <CustomCheckbox
             name="remember_me"
             id="remember_me"
             labelText="Remember Me"
             checkbox="✔︎"
-          ></CustomCheckbox>
+          ></CustomCheckbox> */}
 
-          <a className="a-linkButton" href="#">
+          {/* <a className="a-linkButton" href="#">
             I forgot password
-          </a>
+          </a> */}
         </div>
       </div>
 
