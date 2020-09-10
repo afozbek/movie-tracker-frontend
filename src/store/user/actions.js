@@ -3,6 +3,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED,
+  REGISTER_STARTED,
 } from "./types";
 
 import axios from "../../axios-instance";
@@ -53,6 +56,23 @@ export const login = (username, password, history) => {
   };
 };
 
+export const register = (userData, history) => {
+  return (dispatch) => {
+    dispatch(registerStarted());
+
+    axios
+      .post("/auth/register", userData)
+      .then((res) => {
+        dispatch(registerSuccess(res.data));
+
+        history.push("/");
+      })
+      .catch((err) => {
+        dispatch(registerFailed(err.message));
+      });
+  };
+};
+
 const loginSuccess = (user) => ({
   type: LOGIN_SUCCESS,
   payload: {
@@ -66,6 +86,24 @@ const loginStarted = () => ({
 
 const loginFailed = (error) => ({
   type: LOGIN_FAILED,
+  payload: {
+    error,
+  },
+});
+
+const registerSuccess = (user) => ({
+  type: REGISTER_SUCCESS,
+  payload: {
+    ...user,
+  },
+});
+
+const registerStarted = () => ({
+  type: REGISTER_STARTED,
+});
+
+const registerFailed = (error) => ({
+  type: REGISTER_FAILED,
   payload: {
     error,
   },
