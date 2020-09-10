@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { checkUserAuthentication } from "./store/user/actions";
-import "./main.scss";
+import "./scss/main.scss";
 import AppRouter from "./AppRouter";
 
 const App = (props) => {
