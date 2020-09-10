@@ -9,10 +9,11 @@ const LoginForm = ({ formSubmitHandler, inputChangeHandler }) => {
       <h1 className="a-header">Login</h1>
       <div className="m-loginForm__group">
         <AnimatedInput
-          placeholder="Email"
+          placeholder="Username"
           animateBorder
           inputType="text"
           inputName="username"
+          required
           changeHandler={inputChangeHandler}
         />
       </div>
@@ -23,6 +24,7 @@ const LoginForm = ({ formSubmitHandler, inputChangeHandler }) => {
           animateBorder
           inputType="password"
           inputName="password"
+          required
           changeHandler={inputChangeHandler}
         />
       </div>
