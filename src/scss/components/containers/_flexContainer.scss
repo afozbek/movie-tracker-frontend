@@ -1,3 +1,5 @@
 .m-flexContainer {
-  @include flex(row wrap, flex-start, center);
+  padding-top: 80px;
+  height: 100vh;
+  @include flex(row wrap, flex-start, scretch);
 }
