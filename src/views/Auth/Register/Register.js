@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
+
+import { connect } from "react-redux";
+
+import { register } from "../../../store/user/actions";
+
 import RegisterForm from "./../../../Components/Auth/RegisterForm";
 
-const Register = (props) => {
+const Register = ({ authRegister, history }) => {
   const initialInput = {
     firstName: "",
     lastName: "",
@@ -12,7 +16,6 @@ const Register = (props) => {
     confirm: false,
   };
 
-  const [message, setMessage] = useState("");
   const [input, setInput] = useState(initialInput);
 
   const inputChangeHandler = (e) => {
@@ -51,17 +54,7 @@ const Register = (props) => {
       authorities: confirm ? ["ROLE_ADMIN", "ROLE_USER"] : ["ROLE_USER"],
     };
 
-    axios
-      .post("http://localhost:8080/auth/register", responseData)
-      .then((res) => {
-        setMessage(res.data.username + " successfully registered 😊");
-
-        props.history.push("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-        setMessage(err.message);
-      });
+    authRegister(responseData, history);
   };
 
   return (
@@ -81,4 +74,14 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  authRegister: (userData, history) => {
+    dispatch(register(userData, history));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
