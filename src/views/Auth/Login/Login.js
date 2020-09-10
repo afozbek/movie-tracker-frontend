@@ -1,11 +1,12 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
 
 import { login } from "../../../store/user/actions";
 import Loading from "../../../Components/common/Loading/Loading";
+import LoginForm from "../../../Components/Auth/LoginForm";
 
-const Login = ({ authLogin, history, user }) => {
+const Login = ({ authLogin, history }) => {
   const [loading, setLoading] = useState(true);
   const [input, setInput] = useState({ username: "", password: "" });
 
@@ -25,7 +26,7 @@ const Login = ({ authLogin, history, user }) => {
     setLoading(false);
   }, [loading]);
 
-  const formSubmitHandler = async (e) => {
+  const formSubmitHandler = (e) => {
     e.preventDefault();
 
     const { username, password } = input;
@@ -36,43 +37,19 @@ const Login = ({ authLogin, history, user }) => {
   const content = loading ? (
     <Loading />
   ) : (
-    <form onSubmit={formSubmitHandler}>
-      <div className="inner-container">
-        <h1 className="header">Login</h1>
-        <div className="form-input">
-          <label htmlFor="username" className="form-label">
-            <span className="form-label-text">Username: </span>
-            <input
-              onChange={inputChangeHandler}
-              className="form-text form-label-input"
-              placeholder="Enter Your username"
-              id="username"
-              type="text"
-              name="username"
-              required
-            />
-          </label>
-        </div>
-        <div className="form-input">
-          <label htmlFor="password" className="form-label">
-            <span className="form-label-text">Password: </span>
-            <input
-              onChange={inputChangeHandler}
-              placeholder="Enter your password"
-              className="form-text"
-              id="password"
-              type="password"
-              name="password"
-              required
-            />
-          </label>
-        </div>
-        <input className="button" type="submit" value="LOGIN" />
+    <div className="m-flexContainer">
+      <div className="a-heroImage"></div>
+
+      <div className="m-formContainer">
+        <LoginForm
+          inputChangeHandler={inputChangeHandler}
+          formSubmitHandler={formSubmitHandler}
+        />
       </div>
-    </form>
+    </div>
   );
 
-  return <Fragment>{content}</Fragment>;
+  return <>{content}</>;
 };
 
 const mapStateToProps = (state) => ({

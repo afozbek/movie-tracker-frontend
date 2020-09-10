@@ -1,0 +1,42 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+// // @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+// @font-face {
+//   font-family: "avenir";
+
+//   src: url(https://statics.boyner.com.tr/assets/fonts/avenir/AvenirLTStd-Roman.woff2);
+// }
+
+@font-face {
+  font-family: "Netflix Sans";
+  src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff2);
+}
+
+#root {
+  height: 100vh;
+}
+
+body {
+  font-family: "Netflix Sans", monospace;
+  background-color: #fff;
+  text-align: center;
+  background: #24292e;
+}
+
+a {
+  color: inherit;
+  display: block;
+}

@@ -1,0 +1,34 @@
+@import "../../helpers/variables/initialize";
+@import "../../helpers/mixins/initialize";
+// VARIABLES
+$form-placeholder-color: $manatee;
+
+.m-loginForm {
+  @include flex(column wrap, center, center);
+
+  &::placeholder {
+    color: $form-placeholder-color;
+  }
+
+  &__group {
+    width: 100%;
+
+    margin-bottom: $md;
+
+    &.-mg-lg {
+      margin-bottom: $xxl;
+    }
+  }
+
+  &__rememberWrapper {
+    @include flex(row wrap, space-between, center);
+  }
+}
+
+.a-showCase {
+  width: 100%;
+
+  margin-bottom: $xxl;
+
+  @include flex(row wrap, space-between, center);
+}

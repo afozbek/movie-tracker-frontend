@@ -1,0 +1,28 @@
+/* BASE */
+@import "./base/preset";
+
+/* MIXINS */
+@import "./helpers/mixins/initialize";
+
+/* VARIABLES */
+@import "./helpers/variables/initialize";
+
+/* SHARED */
+@import "./shared/general";
+
+/* COMPONENTS */
+@import "./components/initialize";
+
+/* LAYOUTS */
+@import "./layouts/initialize";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Netflix Sans";
+  src: url(https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff2);
+}
