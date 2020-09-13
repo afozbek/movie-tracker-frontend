@@ -46,6 +46,10 @@ const Register = ({ authRegister, history }) => {
     e.preventDefault();
     const { firstName, lastName, username, password, confirm } = input;
 
+    if (username.trim().length < 5 || password.trim().length < 5) {
+      return;
+    }
+
     const responseData = {
       firstName,
       lastName,
