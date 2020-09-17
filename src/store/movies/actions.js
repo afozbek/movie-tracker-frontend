@@ -5,14 +5,13 @@ import {
 } from "./types";
 
 import axios from "../../axios-movie-instance";
-
-const API_KEY = "174e6bfc840b640cbba20b4f1eec48a8";
+import { __MOVIE_PUBLIC_API_KEY__ } from "./../../utils/index";
 
 export const getMovies = (filterType, currentPage = 1) => {
   return (dispatch) => {
     axios
       .get(`/movie/${filterType}`, {
-        params: { api_key: API_KEY, page: currentPage },
+        params: { api_key: __MOVIE_PUBLIC_API_KEY__, page: currentPage },
       })
       .then((res) => {
         dispatch(getMoviesSuccess(res.data));

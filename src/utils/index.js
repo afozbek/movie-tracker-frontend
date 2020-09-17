@@ -42,3 +42,5 @@ export const filterTypes = [
     filterText: "Upcoming",
   },
 ];
+
+export const __MOVIE_PUBLIC_API_KEY__ = "174e6bfc840b640cbba20b4f1eec48a8";
