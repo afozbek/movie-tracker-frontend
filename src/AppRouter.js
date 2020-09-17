@@ -7,7 +7,7 @@ import Logout from "./views/Auth/Logout/Logout";
 
 import Home from "./views/Home/Home";
 import Header from "./containers/Header/Header";
-import Movie from "./views/NewMovies/Movie";
+import Movie from "./views/Movie/Movie";
 
 const AppRouter = (props) => {
   return (
